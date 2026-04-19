@@ -12,22 +12,24 @@ import {
   PenTool,
   Hammer,
   Rocket,
+  Facebook,
+  Instagram,
 } from 'lucide-react';
 
-const CONTACT_EMAIL = 'hello@2mcode.com';
+const CONTACT_EMAIL = '2mcode.it@gmail.com';
 const CALENDLY_URL = 'https://calendly.com/2mcode/30min';
 
 const FONTS: Record<string, { name: string; stack: string }> = {
-  '1': { name: 'Inter — neo-grotesque', stack: '"Inter", system-ui, sans-serif' },
-  '2': { name: 'Space Grotesk — geometric', stack: '"Space Grotesk", system-ui, sans-serif' },
-  '3': { name: 'Instrument Serif — editorial', stack: '"Instrument Serif", Georgia, serif' },
-  '4': { name: 'Fraunces — flared serif', stack: '"Fraunces", Georgia, serif' },
-  '5': { name: 'Syne — funky display', stack: '"Syne", system-ui, sans-serif' },
-  '6': { name: 'Bricolage Grotesque — variable', stack: '"Bricolage Grotesque", system-ui, sans-serif' },
-  '7': { name: 'Unbounded — heavy display', stack: '"Unbounded", system-ui, sans-serif' },
-  '8': { name: 'Ubuntu Mono — linux system', stack: '"Ubuntu Mono", "Courier New", ui-monospace, monospace' },
-  '9': { name: 'Fira Code — dev ligatures', stack: '"Fira Code", ui-monospace, monospace' },
-  '0': { name: 'Space Mono — retro mono', stack: '"Space Mono", ui-monospace, monospace' },
+  '1': { name: 'Inter - neo-grotesque', stack: '"Inter", system-ui, sans-serif' },
+  '2': { name: 'Space Grotesk - geometric', stack: '"Space Grotesk", system-ui, sans-serif' },
+  '3': { name: 'Instrument Serif - editorial', stack: '"Instrument Serif", Georgia, serif' },
+  '4': { name: 'Fraunces - flared serif', stack: '"Fraunces", Georgia, serif' },
+  '5': { name: 'Syne - funky display', stack: '"Syne", system-ui, sans-serif' },
+  '6': { name: 'Bricolage Grotesque - variable', stack: '"Bricolage Grotesque", system-ui, sans-serif' },
+  '7': { name: 'Unbounded - heavy display', stack: '"Unbounded", system-ui, sans-serif' },
+  '8': { name: 'Ubuntu Mono - linux system', stack: '"Ubuntu Mono", "Courier New", ui-monospace, monospace' },
+  '9': { name: 'Fira Code - dev ligatures', stack: '"Fira Code", ui-monospace, monospace' },
+  '0': { name: 'Space Mono - retro mono', stack: '"Space Mono", ui-monospace, monospace' },
 };
 
 const KEY_THEMES = [
@@ -135,8 +137,9 @@ export default function App() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-[18px] leading-[1.4] text-white max-w-xl mb-12 border-l-2 border-accent pl-5"
           >
-            Rzuciliśmy ciepłe posadki w korporacji, żeby dostarczać realną wartość.
-            Wdrażamy AI, tworzymy aplikacje mobilne i systemy, które skalują Twój biznes.
+            Twój biznes zasługuje na technologię, która działa.
+            <br />
+            Specjalizujemy się we wdrożeniach AI, tworzeniu stron www, aplikacji mobilnych i budowie systemów, które realnie wspierają skalowanie firmy.
             <span className="block mt-3 text-muted text-[14px]">MVP w 4 tygodnie. AI audyt w 5 dni roboczych. Stała cena, bez godzin na spotkaniach.</span>
           </motion.p>
 
@@ -257,33 +260,33 @@ export default function App() {
                 highlight: false,
               },
               {
-                name: 'MVP Sprint',
-                price: 'od 39 000 zł',
-                period: 'netto, 4 tygodnie',
-                pitch: 'Działający produkt w rękach pierwszych klientów w miesiąc. Nie prototyp — prawdziwy software.',
+                name: 'Strony WWW',
+                price: 'od 1 000 zł',
+                period: 'netto, projekt',
+                pitch: 'Szybka, nowoczesna strona, która konwertuje odwiedzających w klientów. Od landing page po pełny serwis firmowy.',
                 features: [
-                  'Web + mobile + backend',
-                  'Integracja AI / LLM',
-                  'Deployment i monitoring',
-                  'Cotygodniowe demo',
-                  '30 dni wsparcia po wdrożeniu',
+                  'Indywidualny projekt graficzny',
+                  'Responsywność (mobile-first)',
+                  'Optymalizacja SEO i Core Web Vitals',
+                  'Darmowy prototyp w 48h',
+                  'Hosting i wsparcie techniczne',
                 ],
-                cta: 'Rozpocznij MVP',
+                cta: 'Zamów stronę',
                 highlight: true,
               },
               {
-                name: 'Retainer AI',
-                price: 'od 12 000 zł',
-                period: 'netto / miesiąc',
-                pitch: 'Masz produkt i chcesz żeby dalej rósł. Dedykujemy Ci nasz czas i mocne mózgi.',
+                name: 'Aplikacje Mobilne',
+                price: 'od 4 500 zł',
+                period: 'netto, projekt',
+                pitch: 'Natywne lub cross-platformowe aplikacje na iOS i Android, które Twoi klienci pokochają. Od pomysłu do App Store w kilka tygodni.',
                 features: [
-                  '40h developerskich / mies.',
-                  'Priorytetowy kanał Slack',
-                  'Sprint planning co 2 tyg.',
-                  'Observability + SLA',
-                  'Możliwość skalowania',
+                  'React Native / Flutter',
+                  'Publikacja w App Store i Google Play',
+                  'Design UI/UX dopasowany do marki',
+                  'Integracja z backendem i API',
+                  '30 dni wsparcia po wdrożeniu',
                 ],
-                cta: 'Zarezerwuj slot',
+                cta: 'Wyceń aplikację',
                 highlight: false,
               },
             ].map((pkg, i) => (
@@ -326,7 +329,7 @@ export default function App() {
           <p className="text-center text-muted text-[12px] mt-10">
             Potrzebujesz czegoś innego?{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline font-bold">Napisz do nas</a>{' '}
-            — przygotujemy ofertę w 48h.
+            - przygotujemy ofertę w 48h.
           </p>
         </section>
 
@@ -334,7 +337,7 @@ export default function App() {
         <section id="proces" className="py-24 px-10 max-w-[1200px] mx-auto">
           <div className="mb-16 border-b border-[#333] pb-8">
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Jak pracujemy</h2>
-            <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Od pierwszego maila do działającego systemu — bez niespodzianek.</p>
+            <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Od pierwszego maila do działającego systemu - bez niespodzianek.</p>
           </div>
 
           <motion.div
@@ -389,7 +392,7 @@ export default function App() {
 
                   <div className="mt-12 pt-6 border-t border-[#333] flex items-center gap-4">
                     <div className="w-2 h-2 rounded-full bg-accent" />
-                    <span className="text-[12px] font-bold uppercase tracking-[1px]">M & P — Założyciele, Ex-Senior Engineers</span>
+                    <span className="text-[12px] font-bold uppercase tracking-[1px]">M & M - Założyciele, Ex-Senior Engineers</span>
                   </div>
                 </motion.div>
               </div>
@@ -435,7 +438,7 @@ export default function App() {
           >
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-6 leading-[0.9]">Gotowy na wzrost?</h2>
             <p className="text-[18px] text-white mb-10 max-w-2xl border-l-2 border-accent pl-5">
-              Wybierz szybszą ścieżkę — 30-min rozmowa w kalendarzu, albo napisz maila. Odpowiadamy w 24h z konkretnym planem. Bez korpo-gadki.
+              Wybierz szybszą ścieżkę - 30-min rozmowa w kalendarzu, albo napisz maila. Odpowiadamy w 24h z konkretnym planem. Bez korpo-gadki.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
@@ -455,13 +458,13 @@ export default function App() {
               </a>
 
               <a
-                href={`mailto:${CONTACT_EMAIL}?subject=Projekt%20z%20excorpo.ai&body=Cze%C5%9B%C4%87%2C%0A%0AChcia%C5%82%2Fa%C5%82abym%20porozmawia%C4%87%20o%3A%0A%0A-%20Mojej%20bran%C5%BCy%3A%20%0A-%20Problemie%2C%20kt%C3%B3ry%20chc%C4%99%20rozwi%C4%85za%C4%87%3A%20%0A-%20Bud%C5%BCecie%3A%20%0A-%20Terminie%3A%20%0A%0APozdrawiam`}
+                href={`mailto:${CONTACT_EMAIL}?subject=Projekt%20z%202mcode&body=Cze%C5%9B%C4%87%2C%0A%0AChcia%C5%82%2Fa%C5%82abym%20porozmawia%C4%87%20o%3A%0A%0A-%20Mojej%20bran%C5%BCy%3A%20%0A-%20Problemie%2C%20kt%C3%B3ry%20chc%C4%99%20rozwi%C4%85za%C4%87%3A%20%0A-%20Bud%C5%BCecie%3A%20%0A-%20Terminie%3A%20%0A%0APozdrawiam`}
                 className="p-8 bg-card border border-border rounded-sm flex flex-col gap-3 hover:border-[#444] transition-colors"
               >
                 <Mail className="w-7 h-7 text-accent" />
                 <div className="text-[11px] uppercase tracking-[2px] font-bold text-muted">Wolisz mailem?</div>
                 <div className="text-xl font-black uppercase tracking-tight text-white">{CONTACT_EMAIL}</div>
-                <div className="text-[13px] leading-[1.4] text-[#bbb]">Opisz krótko problem i budżet — odpowiemy w 24h z konkretną propozycją.</div>
+                <div className="text-[13px] leading-[1.4] text-[#bbb]">Opisz krótko problem i budżet - odpowiemy w 24h z konkretną propozycją.</div>
                 <div className="mt-2 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[1px] text-accent">
                   Wyślij maila <ArrowRight className="w-4 h-4" />
                 </div>
@@ -473,29 +476,32 @@ export default function App() {
 
       {/* Footer */}
       <footer className="border-t border-[#222] py-10 px-10 bg-bg">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-3 grid-rows-2 gap-y-0 items-center">
+          <div className="flex items-center gap-3">
+            <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
+            <span className="text-lg font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
+          </div>
+          <div className="uppercase tracking-[2px] font-bold text-muted text-[10px]">Kontakt</div>
+          <div className="flex gap-6">
+            <a href="https://www.facebook.com/profile.php?id=61570962609416" className="flex items-center gap-1 text-[10px] uppercase tracking-[2px] font-bold text-muted hover:text-white transition-colors">
+              <Facebook className="w-3 h-3" />
+              Facebook
+            </a>
+            <a href="https://www.instagram.com/2m.code" className="flex items-center gap-1 text-[10px] uppercase tracking-[2px] font-bold text-muted hover:text-white transition-colors">
+              <Instagram className="w-3 h-3" />
+              Instagram
+            </a>
+          </div>
+
+          <div className="text-[#666] text-[11px] ml-[2.75rem]">
+            Soft, który zarabia.<br />
+            Wrocław, Polska.
+          </div>
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
-              <span className="text-lg font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
-            </div>
-            <p className="text-[#666] text-[11px] leading-[1.6]">
-              Soft, który zarabia.<br />
-              Wrocław, Polska.
-            </p>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[11px] text-[#888] hover:text-accent transition-colors block">{CONTACT_EMAIL}</a>
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#888] hover:text-accent transition-colors block">Umów spotkanie →</a>
           </div>
-
-          <div className="text-[11px] text-[#888] leading-[1.8]">
-            <div className="uppercase tracking-[2px] font-bold text-muted mb-3 text-[10px]">Kontakt</div>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="block hover:text-accent transition-colors">{CONTACT_EMAIL}</a>
-            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="block hover:text-accent transition-colors">Umów spotkanie →</a>
-          </div>
-
-          <div className="flex md:justify-end items-start gap-6 text-[10px] uppercase tracking-[2px] font-bold text-muted">
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-white transition-colors">Github</a>
-            <a href="#" className="hover:text-white transition-colors">X</a>
-          </div>
+          <div></div>
         </div>
         <div className="max-w-[1200px] mx-auto mt-8 pt-6 border-t border-[#222] flex flex-col md:flex-row justify-between gap-3 text-[10px] uppercase tracking-[1px] font-bold text-[#555]">
           <p>© 2026 2mcode. Wszelkie prawa zastrzeżone.</p>
@@ -503,7 +509,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Theme switcher (keys 1–9 for bg, Q–P for full palettes) — panel hidden, shortcuts still active */}
+      {/* Theme switcher (keys 1-9 for bg, Q-P for full palettes) - panel hidden, shortcuts still active */}
       <div className="hidden fixed bottom-6 right-6 z-50 flex-col gap-2 bg-black/80 backdrop-blur border border-[#333] rounded-sm p-2 shadow-lg">
         <div className="flex items-center gap-2">
           <span className="hidden sm:block text-[9px] uppercase tracking-[2px] font-bold text-muted pl-2 pr-1 w-12">Font</span>
@@ -513,7 +519,7 @@ export default function App() {
               <button
                 key={id}
                 onClick={() => setFont(id)}
-                title={`${id} — ${f.name}`}
+                title={`${id} - ${f.name}`}
                 aria-label={`Font ${id}: ${f.name}`}
                 className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 bg-[#111] ${active ? 'border-white scale-110' : 'border-[#333]'}`}
                 style={{ fontFamily: f.stack }}
@@ -533,7 +539,7 @@ export default function App() {
               <button
                 key={t.id}
                 onClick={() => setTheme(t.id)}
-                title={`${t.id.toUpperCase()} — ${t.name}`}
+                title={`${t.id.toUpperCase()} - ${t.name}`}
                 aria-label={`Paleta ${t.id.toUpperCase()}: ${t.name}`}
                 className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 ${active ? 'border-white scale-110' : 'border-[#333]'}`}
                 style={{ background: t.swatch }}
