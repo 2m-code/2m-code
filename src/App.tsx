@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import {
   ArrowRight,
   Code2,
   Cpu,
   Smartphone,
-  Terminal,
   Check,
   Calendar,
   Mail,
@@ -14,8 +14,34 @@ import {
   Rocket,
 } from 'lucide-react';
 
-const CONTACT_EMAIL = 'hello@excorpo.ai';
-const CALENDLY_URL = 'https://calendly.com/excorpo-ai/30min';
+const CONTACT_EMAIL = 'hello@2mcode.com';
+const CALENDLY_URL = 'https://calendly.com/2mcode/30min';
+
+const FONTS: Record<string, { name: string; stack: string }> = {
+  '1': { name: 'Inter — neo-grotesque', stack: '"Inter", system-ui, sans-serif' },
+  '2': { name: 'Space Grotesk — geometric', stack: '"Space Grotesk", system-ui, sans-serif' },
+  '3': { name: 'Instrument Serif — editorial', stack: '"Instrument Serif", Georgia, serif' },
+  '4': { name: 'Fraunces — flared serif', stack: '"Fraunces", Georgia, serif' },
+  '5': { name: 'Syne — funky display', stack: '"Syne", system-ui, sans-serif' },
+  '6': { name: 'Bricolage Grotesque — variable', stack: '"Bricolage Grotesque", system-ui, sans-serif' },
+  '7': { name: 'Unbounded — heavy display', stack: '"Unbounded", system-ui, sans-serif' },
+  '8': { name: 'Ubuntu Mono — linux system', stack: '"Ubuntu Mono", "Courier New", ui-monospace, monospace' },
+  '9': { name: 'Fira Code — dev ligatures', stack: '"Fira Code", ui-monospace, monospace' },
+  '0': { name: 'Space Mono — retro mono', stack: '"Space Mono", ui-monospace, monospace' },
+};
+
+const KEY_THEMES = [
+  { id: 'q', name: 'Linear Sky', swatch: 'linear-gradient(135deg,#0A0E14,#38BDF8)' },
+  { id: 'w', name: 'Vercel Indigo', swatch: 'linear-gradient(135deg,#0B0B0F,#818CF8)' },
+  { id: 'e', name: 'Stripe Emerald', swatch: 'linear-gradient(135deg,#0A1014,#10B981)' },
+  { id: 'r', name: 'Framer Violet', swatch: 'linear-gradient(135deg,#0C0A14,#8B5CF6)' },
+  { id: 't', name: 'Graphite Amber', swatch: 'linear-gradient(135deg,#0F0D0A,#F59E0B)' },
+  { id: 'y', name: 'Notion Blue', swatch: 'linear-gradient(135deg,#0A1020,#3B82F6)' },
+  { id: 'u', name: 'Teal Minimal', swatch: 'linear-gradient(135deg,#09100F,#14B8A6)' },
+  { id: 'i', name: 'Rose Muted', swatch: 'linear-gradient(135deg,#100A0D,#F43F5E)' },
+  { id: 'o', name: 'Green Calm', swatch: 'linear-gradient(135deg,#0B1010,#22C55E)' },
+  { id: 'p', name: 'Midnight Lavender', swatch: 'linear-gradient(135deg,#0B0C1A,#A78BFA)' },
+];
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -32,13 +58,36 @@ const staggerContainer = {
 };
 
 export default function App() {
+  const [theme, setTheme] = useState<string>('e');
+  const [font, setFont] = useState<string>('6');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--font-sans', FONTS[font].stack);
+  }, [font]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+      if (/^[0-9]$/.test(e.key)) setFont(e.key);
+      else if (/^[qwertyuiop]$/.test(e.key.toLowerCase())) setTheme(e.key.toLowerCase());
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
     <div className="min-h-screen bg-bg text-text selection:bg-accent/30 font-sans overflow-hidden relative">
       {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between px-10 py-10 max-w-[1200px] mx-auto">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-6 h-6 text-accent" />
-          <span className="text-2xl font-black tracking-tighter uppercase">excorpo<span className="text-accent">.ai</span></span>
+        <div className="flex items-center gap-3">
+          <img src="/logo-mark.svg" alt="2mcode" className="w-10 h-10" />
+          <span className="text-2xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-[12px] uppercase tracking-[2px] font-bold text-muted">
           <a href="#uslugi" className="hover:text-white transition-colors">Usługi</a>
@@ -74,7 +123,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[clamp(4rem,9vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-accent mb-8"
+            className="text-[clamp(4rem,9vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-gradient mb-8"
           >
             Tworzymy soft,<br />
             który zarabia.
@@ -101,7 +150,7 @@ export default function App() {
               href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-10 py-5 bg-accent text-black font-extrabold uppercase text-sm flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform w-full sm:w-auto rounded-sm"
+              className="px-10 py-5 bg-gradient-accent text-black font-extrabold uppercase text-sm flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform w-full sm:w-auto rounded-sm"
             >
               Umów darmową konsultację <ArrowRight className="w-5 h-5" />
             </a>
@@ -134,7 +183,7 @@ export default function App() {
         {/* Services Section */}
         <section id="uslugi" className="py-24 px-10 max-w-[1200px] mx-auto">
           <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-accent mb-4 leading-[0.9]">W czym jesteśmy najlepsi?</h2>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">W czym jesteśmy najlepsi?</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Nie robimy wszystkiego. Robimy to, co przynosi zysk.</p>
           </div>
 
@@ -180,7 +229,7 @@ export default function App() {
         {/* Packages Section */}
         <section id="pakiety" className="py-24 px-10 max-w-[1200px] mx-auto">
           <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-accent mb-4 leading-[0.9]">Pakiety i ceny</h2>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Pakiety i ceny</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Stała cena. Jasny zakres. Zero niespodzianek na fakturze.</p>
           </div>
 
@@ -266,7 +315,7 @@ export default function App() {
                   href={CALENDLY_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`px-6 py-4 text-[11px] font-extrabold uppercase tracking-[1px] rounded-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] ${pkg.highlight ? 'bg-accent text-black' : 'bg-[#1a1a1a] border border-[#444] text-white hover:bg-[#222]'}`}
+                  className={`px-6 py-4 text-[11px] font-extrabold uppercase tracking-[1px] rounded-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] ${pkg.highlight ? 'bg-gradient-accent text-black' : 'bg-[#1a1a1a] border border-[#444] text-white hover:bg-[#222]'}`}
                 >
                   {pkg.cta} <ArrowRight className="w-4 h-4" />
                 </a>
@@ -284,7 +333,7 @@ export default function App() {
         {/* Process Section */}
         <section id="proces" className="py-24 px-10 max-w-[1200px] mx-auto">
           <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-accent mb-4 leading-[0.9]">Jak pracujemy</h2>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Jak pracujemy</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Od pierwszego maila do działającego systemu — bez niespodzianek.</p>
           </div>
 
@@ -323,9 +372,8 @@ export default function App() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                 >
-                  <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-accent mb-8 leading-[0.9]">
-                    Uciekliśmy z <br/>
-                    <span className="text-[#444] line-through decoration-accent decoration-4">korporacji</span>
+                  <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-8 leading-[0.9]">
+                    Budujemy <br/>inaczej.
                   </h2>
                   <div className="space-y-6 text-[15px] leading-[1.4] text-[#ccc]">
                     <p>
@@ -385,7 +433,7 @@ export default function App() {
             viewport={{ once: true, margin: "-100px" }}
             className="border-t border-[#333] pt-16"
           >
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-accent mb-6 leading-[0.9]">Gotowy na wzrost?</h2>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-6 leading-[0.9]">Gotowy na wzrost?</h2>
             <p className="text-[18px] text-white mb-10 max-w-2xl border-l-2 border-accent pl-5">
               Wybierz szybszą ścieżkę — 30-min rozmowa w kalendarzu, albo napisz maila. Odpowiadamy w 24h z konkretnym planem. Bez korpo-gadki.
             </p>
@@ -395,7 +443,7 @@ export default function App() {
                 href={CALENDLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-8 bg-accent text-black rounded-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform"
+                className="p-8 bg-gradient-accent text-black rounded-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform"
               >
                 <Calendar className="w-7 h-7" />
                 <div className="text-[11px] uppercase tracking-[2px] font-bold opacity-70">Szybka ścieżka</div>
@@ -427,9 +475,9 @@ export default function App() {
       <footer className="border-t border-[#222] py-10 px-10 bg-bg">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Terminal className="w-5 h-5 text-accent" />
-              <span className="text-lg font-black tracking-tighter uppercase">excorpo<span className="text-accent">.ai</span></span>
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
+              <span className="text-lg font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
             </div>
             <p className="text-[#666] text-[11px] leading-[1.6]">
               Soft, który zarabia.<br />
@@ -450,10 +498,54 @@ export default function App() {
           </div>
         </div>
         <div className="max-w-[1200px] mx-auto mt-8 pt-6 border-t border-[#222] flex flex-col md:flex-row justify-between gap-3 text-[10px] uppercase tracking-[1px] font-bold text-[#555]">
-          <p>© 2026 Excorpo AI. Wszelkie prawa zastrzeżone.</p>
+          <p>© 2026 2mcode. Wszelkie prawa zastrzeżone.</p>
           <p>Made in Poland · Stała cena · Jasny zakres</p>
         </div>
       </footer>
+
+      {/* Theme switcher (keys 1–9 for bg, Q–P for full palettes) — panel hidden, shortcuts still active */}
+      <div className="hidden fixed bottom-6 right-6 z-50 flex-col gap-2 bg-black/80 backdrop-blur border border-[#333] rounded-sm p-2 shadow-lg">
+        <div className="flex items-center gap-2">
+          <span className="hidden sm:block text-[9px] uppercase tracking-[2px] font-bold text-muted pl-2 pr-1 w-12">Font</span>
+          {Object.entries(FONTS).map(([id, f]) => {
+            const active = font === id;
+            return (
+              <button
+                key={id}
+                onClick={() => setFont(id)}
+                title={`${id} — ${f.name}`}
+                aria-label={`Font ${id}: ${f.name}`}
+                className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 bg-[#111] ${active ? 'border-white scale-110' : 'border-[#333]'}`}
+                style={{ fontFamily: f.stack }}
+              >
+                <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-black text-white ${active ? 'opacity-100' : 'opacity-70'}`}>
+                  {id}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="hidden sm:block text-[9px] uppercase tracking-[2px] font-bold text-muted pl-2 pr-1 w-12">Paleta</span>
+          {KEY_THEMES.map((t) => {
+            const active = theme === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setTheme(t.id)}
+                title={`${t.id.toUpperCase()} — ${t.name}`}
+                aria-label={`Paleta ${t.id.toUpperCase()}: ${t.name}`}
+                className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 ${active ? 'border-white scale-110' : 'border-[#333]'}`}
+                style={{ background: t.swatch }}
+              >
+                <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-black text-white uppercase ${active ? 'opacity-100' : 'opacity-70'}`}>
+                  {t.id}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
