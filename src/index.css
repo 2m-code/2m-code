@@ -93,6 +93,11 @@
   border-image: linear-gradient(135deg, var(--grad-a), var(--grad-c)) 1;
 }
 
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);

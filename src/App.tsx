@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowRight,
   Code2,
@@ -14,6 +14,8 @@ import {
   Rocket,
   Facebook,
   Instagram,
+  Menu,
+  X,
 } from 'lucide-react';
 
 const CONTACT_EMAIL = '2mcode.it@gmail.com';
@@ -62,6 +64,7 @@ const staggerContainer = {
 export default function App() {
   const [theme, setTheme] = useState<string>('e');
   const [font, setFont] = useState<string>('6');
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -73,6 +76,10 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        return;
+      }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const target = e.target as HTMLElement | null;
       if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
@@ -83,34 +90,140 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const navLinks = [
+    { href: '#uslugi', label: 'Usługi' },
+    { href: '#pakiety', label: 'Pakiety' },
+    { href: '#proces', label: 'Proces' },
+    { href: '#historia', label: 'O nas' },
+    { href: '#kontakt', label: 'Kontakt' },
+  ];
+
   return (
-    <div className="min-h-screen bg-bg text-text selection:bg-accent/30 font-sans overflow-hidden relative">
+    <div className="min-h-screen bg-bg text-text selection:bg-accent/30 font-sans relative">
       {/* Navbar */}
-      <nav className="relative z-10 flex items-center justify-between px-10 py-10 max-w-[1200px] mx-auto">
-        <div className="flex items-center gap-3">
-          <img src="/logo-mark.svg" alt="2mcode" className="w-10 h-10" />
-          <span className="text-2xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
+      <header className="sticky top-0 z-40 bg-bg/80 backdrop-blur-md border-b border-[#222]/70">
+      <nav className="flex items-center justify-between px-5 md:px-10 py-4 md:py-6 max-w-[1200px] mx-auto gap-3">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0" />
+          <span className="text-xl md:text-2xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-[12px] uppercase tracking-[2px] font-bold text-muted">
-          <a href="#uslugi" className="hover:text-white transition-colors">Usługi</a>
-          <a href="#pakiety" className="hover:text-white transition-colors">Pakiety</a>
-          <a href="#proces" className="hover:text-white transition-colors">Proces</a>
-          <a href="#historia" className="hover:text-white transition-colors">O nas</a>
-          <a href="#kontakt" className="hover:text-white transition-colors">Kontakt</a>
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className="hover:text-white transition-colors">{l.label}</a>
+          ))}
         </div>
         <a
           href={CALENDLY_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 text-[10px] font-bold uppercase tracking-[1px] border border-[#444] rounded-sm hover:bg-[#111] transition-colors"
+          className="hidden md:inline-flex px-4 md:px-6 py-2.5 md:py-3 text-[10px] font-bold uppercase tracking-[1px] border border-[#444] rounded-sm hover:bg-[#111] transition-colors whitespace-nowrap flex-shrink-0"
         >
           Porozmawiajmy
         </a>
+        {/* Burger button (mobile only) */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Otwórz menu"
+          aria-expanded={menuOpen}
+          className="md:hidden w-10 h-10 flex items-center justify-center border border-[#444] rounded-sm hover:bg-[#111] transition-colors flex-shrink-0"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
       </nav>
+      </header>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 md:hidden bg-bg/95 backdrop-blur-sm flex flex-col"
+            onClick={() => setMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="flex flex-col h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Menu header */}
+              <div className="flex items-center justify-between px-5 py-6 border-b border-[#222]">
+                <div className="flex items-center gap-2">
+                  <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
+                  <span className="text-xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Zamknij menu"
+                  className="w-10 h-10 flex items-center justify-center border border-[#444] rounded-sm hover:bg-[#111] transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Menu links */}
+              <nav className="flex-1 flex flex-col justify-center px-5 gap-1">
+                {navLinks.map((l, i) => (
+                  <motion.a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.05 + i * 0.05, duration: 0.25 }}
+                    className="text-4xl font-black uppercase tracking-tighter text-gradient py-3 hover:opacity-80 transition-opacity"
+                  >
+                    {l.label}
+                  </motion.a>
+                ))}
+              </nav>
+
+              {/* Menu footer CTA */}
+              <div className="px-5 py-6 border-t border-[#222] flex flex-col gap-3">
+                <a
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMenuOpen(false)}
+                  className="px-6 py-4 bg-gradient-accent text-black font-extrabold uppercase text-sm flex items-center justify-center gap-2 rounded-sm"
+                >
+                  Umów darmową konsultację <ArrowRight className="w-5 h-5" />
+                </a>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-[12px] uppercase tracking-[2px] font-bold text-muted hover:text-white transition-colors text-center"
+                >
+                  {CONTACT_EMAIL}
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="pt-20 pb-20 px-10 max-w-[1200px] mx-auto flex flex-col items-start text-left">
+        <section className="pt-12 md:pt-20 pb-16 md:pb-20 px-5 md:px-10 max-w-[1200px] mx-auto flex flex-col items-start text-left">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -125,7 +238,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[clamp(4rem,9vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-gradient mb-8"
+            className="text-[clamp(2.75rem,10vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-gradient mb-6 md:mb-8"
           >
             Tworzymy soft,<br />
             który zarabia.
@@ -135,7 +248,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[18px] leading-[1.4] text-white max-w-xl mb-12 border-l-2 border-accent pl-5"
+            className="text-[16px] md:text-[18px] leading-[1.4] text-white max-w-xl mb-10 md:mb-12 border-l-2 border-accent pl-4 md:pl-5"
           >
             Twój biznes zasługuje na technologię, która działa.
             <br />
@@ -153,13 +266,13 @@ export default function App() {
               href={CALENDLY_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-10 py-5 bg-gradient-accent text-black font-extrabold uppercase text-sm flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform w-full sm:w-auto rounded-sm"
+              className="px-6 md:px-10 py-4 md:py-5 bg-gradient-accent text-black font-extrabold uppercase text-sm flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform w-full sm:w-auto rounded-sm"
             >
               Umów darmową konsultację <ArrowRight className="w-5 h-5" />
             </a>
             <a
               href="#pakiety"
-              className="px-10 py-5 bg-transparent border border-[#444] font-bold uppercase text-sm text-white hover:bg-[#111] transition-colors w-full sm:w-auto flex items-center justify-center rounded-sm"
+              className="px-6 md:px-10 py-4 md:py-5 bg-transparent border border-[#444] font-bold uppercase text-sm text-white hover:bg-[#111] transition-colors w-full sm:w-auto flex items-center justify-center rounded-sm"
             >
               Zobacz pakiety i ceny
             </a>
@@ -167,7 +280,7 @@ export default function App() {
         </section>
 
         {/* Social Proof / Metrics Strip */}
-        <section className="px-10 max-w-[1200px] mx-auto">
+        <section className="px-5 md:px-10 max-w-[1200px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#222] border border-[#222] rounded-sm overflow-hidden">
             {[
               { value: '12+', label: 'Wdrożonych projektów' },
@@ -175,18 +288,18 @@ export default function App() {
               { value: '100%', label: 'Stała cena, bez niespodzianek' },
               { value: '24h', label: 'Czas na pierwszą odpowiedź' },
             ].map((stat, i) => (
-              <div key={i} className="bg-bg p-6 md:p-8">
-                <div className="text-3xl md:text-4xl font-black text-accent tracking-tighter mb-2">{stat.value}</div>
-                <div className="text-[10px] uppercase tracking-[2px] font-bold text-muted leading-[1.4]">{stat.label}</div>
+              <div key={i} className="bg-bg p-5 md:p-8">
+                <div className="text-2xl md:text-4xl font-black text-accent tracking-tighter mb-2">{stat.value}</div>
+                <div className="text-[10px] uppercase tracking-[1.5px] md:tracking-[2px] font-bold text-muted leading-[1.4]">{stat.label}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Services Section */}
-        <section id="uslugi" className="py-24 px-10 max-w-[1200px] mx-auto">
-          <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">W czym jesteśmy najlepsi?</h2>
+        <section id="uslugi" className="py-16 md:py-24 px-5 md:px-10 max-w-[1200px] mx-auto">
+          <div className="mb-10 md:mb-16 border-b border-[#333] pb-6 md:pb-8">
+            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">W czym jesteśmy najlepsi?</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Nie robimy wszystkiego. Robimy to, co przynosi zysk.</p>
           </div>
 
@@ -217,7 +330,7 @@ export default function App() {
               <motion.div
                 key={i}
                 variants={fadeIn}
-                className="p-8 bg-card border border-border rounded-sm hover:border-[#444] transition-colors group relative"
+                className="p-6 md:p-8 bg-card border border-border rounded-sm hover:border-[#444] transition-colors group relative"
               >
                 <div className="mb-6">
                   {service.icon}
@@ -230,9 +343,9 @@ export default function App() {
         </section>
 
         {/* Packages Section */}
-        <section id="pakiety" className="py-24 px-10 max-w-[1200px] mx-auto">
-          <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Pakiety i ceny</h2>
+        <section id="pakiety" className="py-16 md:py-24 px-5 md:px-10 max-w-[1200px] mx-auto">
+          <div className="mb-10 md:mb-16 border-b border-[#333] pb-6 md:pb-8">
+            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Pakiety i ceny</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Stała cena. Jasny zakres. Zero niespodzianek na fakturze.</p>
           </div>
 
@@ -293,10 +406,10 @@ export default function App() {
               <motion.div
                 key={i}
                 variants={fadeIn}
-                className={`p-8 bg-card border rounded-sm relative flex flex-col ${pkg.highlight ? 'border-accent' : 'border-border hover:border-[#444]'} transition-colors`}
+                className={`p-6 md:p-8 bg-card border rounded-sm relative flex flex-col ${pkg.highlight ? 'border-accent' : 'border-border hover:border-[#444]'} transition-colors`}
               >
                 {pkg.highlight && (
-                  <div className="absolute -top-3 left-8 px-3 py-1 bg-accent text-black text-[10px] font-extrabold uppercase tracking-[2px] rounded-sm">
+                  <div className="absolute -top-3 left-6 md:left-8 px-3 py-1 bg-accent text-black text-[10px] font-extrabold uppercase tracking-[2px] rounded-sm">
                     Najczęściej wybierany
                   </div>
                 )}
@@ -334,9 +447,9 @@ export default function App() {
         </section>
 
         {/* Process Section */}
-        <section id="proces" className="py-24 px-10 max-w-[1200px] mx-auto">
-          <div className="mb-16 border-b border-[#333] pb-8">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Jak pracujemy</h2>
+        <section id="proces" className="py-16 md:py-24 px-5 md:px-10 max-w-[1200px] mx-auto">
+          <div className="mb-10 md:mb-16 border-b border-[#333] pb-6 md:pb-8">
+            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-4 leading-[0.9]">Jak pracujemy</h2>
             <p className="text-muted text-[12px] uppercase tracking-[2px] font-bold">Od pierwszego maila do działającego systemu - bez niespodzianek.</p>
           </div>
 
@@ -366,9 +479,9 @@ export default function App() {
         </section>
 
         {/* Story Section */}
-        <section id="historia" className="py-24 px-10 max-w-[1200px] mx-auto">
-          <div className="bg-card border border-border rounded-sm p-8 md:p-12 relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start relative z-10">
+        <section id="historia" className="py-16 md:py-24 px-5 md:px-10 max-w-[1200px] mx-auto">
+          <div className="bg-card border border-border rounded-sm p-6 md:p-12 relative">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start relative z-10">
               <div>
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -429,15 +542,15 @@ export default function App() {
         </section>
 
         {/* CTA Section */}
-        <section id="kontakt" className="py-24 px-10 text-left max-w-[1200px] mx-auto">
+        <section id="kontakt" className="py-16 md:py-24 px-5 md:px-10 text-left max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="border-t border-[#333] pt-16"
+            className="border-t border-[#333] pt-10 md:pt-16"
           >
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-6 leading-[0.9]">Gotowy na wzrost?</h2>
-            <p className="text-[18px] text-white mb-10 max-w-2xl border-l-2 border-accent pl-5">
+            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-gradient mb-6 leading-[0.9]">Gotowy na wzrost?</h2>
+            <p className="text-[16px] md:text-[18px] text-white mb-8 md:mb-10 max-w-2xl border-l-2 border-accent pl-4 md:pl-5">
               Wybierz szybszą ścieżkę - 30-min rozmowa w kalendarzu, albo napisz maila. Odpowiadamy w 24h z konkretnym planem. Bez korpo-gadki.
             </p>
 
@@ -446,7 +559,7 @@ export default function App() {
                 href={CALENDLY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-8 bg-gradient-accent text-black rounded-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform"
+                className="p-6 md:p-8 bg-gradient-accent text-black rounded-sm flex flex-col gap-3 hover:scale-[1.01] transition-transform"
               >
                 <Calendar className="w-7 h-7" />
                 <div className="text-[11px] uppercase tracking-[2px] font-bold opacity-70">Szybka ścieżka</div>
@@ -459,7 +572,7 @@ export default function App() {
 
               <a
                 href={`mailto:${CONTACT_EMAIL}?subject=Projekt%20z%202mcode&body=Cze%C5%9B%C4%87%2C%0A%0AChcia%C5%82%2Fa%C5%82abym%20porozmawia%C4%87%20o%3A%0A%0A-%20Mojej%20bran%C5%BCy%3A%20%0A-%20Problemie%2C%20kt%C3%B3ry%20chc%C4%99%20rozwi%C4%85za%C4%87%3A%20%0A-%20Bud%C5%BCecie%3A%20%0A-%20Terminie%3A%20%0A%0APozdrawiam`}
-                className="p-8 bg-card border border-border rounded-sm flex flex-col gap-3 hover:border-[#444] transition-colors"
+                className="p-6 md:p-8 bg-card border border-border rounded-sm flex flex-col gap-3 hover:border-[#444] transition-colors"
               >
                 <Mail className="w-7 h-7 text-accent" />
                 <div className="text-[11px] uppercase tracking-[2px] font-bold text-muted">Wolisz mailem?</div>
@@ -475,35 +588,33 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#222] py-10 px-10 bg-bg">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-3 grid-rows-2 gap-y-0 items-center">
-          <div className="flex items-center gap-3">
-            <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
-            <span className="text-lg font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
+      <footer className="border-t border-[#222] py-10 px-5 md:px-10 bg-bg">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-3 grid-rows-[auto_auto_auto] gap-x-4 md:gap-x-6 gap-y-1.5 items-center justify-items-center text-center">
+          {/* Row 1: Brand | Kontakt label | Social label */}
+          <div className="flex items-center gap-1 md:gap-1.5 min-w-0">
+            <img src="/logo-mark.svg" alt="2mcode" className="w-6 h-6 md:w-8 md:h-8 flex-shrink-0" />
+            <span className="text-sm md:text-lg font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
           </div>
-          <div className="uppercase tracking-[2px] font-bold text-muted text-[10px]">Kontakt</div>
-          <div className="flex gap-6">
-            <a href="https://www.facebook.com/profile.php?id=61570962609416" className="flex items-center gap-1 text-[10px] uppercase tracking-[2px] font-bold text-muted hover:text-white transition-colors">
-              <Facebook className="w-3 h-3" />
-              Facebook
-            </a>
-            <a href="https://www.instagram.com/2m.code" className="flex items-center gap-1 text-[10px] uppercase tracking-[2px] font-bold text-muted hover:text-white transition-colors">
-              <Instagram className="w-3 h-3" />
-              Instagram
-            </a>
-          </div>
+          <div className="uppercase tracking-[1.5px] md:tracking-[2px] font-bold text-muted text-[9px] md:text-[10px]">Kontakt</div>
+          <div className="uppercase tracking-[1.5px] md:tracking-[2px] font-bold text-muted text-[9px] md:text-[10px]">Social</div>
 
-          <div className="text-[#666] text-[11px] ml-[2.75rem]">
-            Soft, który zarabia.<br />
-            Wrocław, Polska.
-          </div>
-          <div>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-[11px] text-[#888] hover:text-accent transition-colors block">{CONTACT_EMAIL}</a>
-            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#888] hover:text-accent transition-colors block">Umów spotkanie →</a>
-          </div>
-          <div></div>
+          {/* Row 2: Description line 1 | Email | Facebook */}
+          <div className="text-[#666] text-[10px] md:text-[11px] leading-[1.5]">Soft, który zarabia.</div>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-[10px] md:text-[11px] text-[#888] hover:text-accent transition-colors break-all leading-[1.5]">{CONTACT_EMAIL}</a>
+          <a href="https://www.facebook.com/profile.php?id=61570962609416" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[9px] md:text-[10px] uppercase tracking-[1.5px] md:tracking-[2px] font-bold text-muted hover:text-white transition-colors leading-[1.5]">
+            <Facebook className="w-3 h-3 flex-shrink-0" />
+            Facebook
+          </a>
+
+          {/* Row 3: Description line 2 | Umów spotkanie | Instagram */}
+          <div className="text-[#666] text-[10px] md:text-[11px] leading-[1.5]">Wrocław, Polska.</div>
+          <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-[10px] md:text-[11px] text-[#888] hover:text-accent transition-colors whitespace-nowrap leading-[1.5]">Umów spotkanie →</a>
+          <a href="https://www.instagram.com/2m.code" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-[9px] md:text-[10px] uppercase tracking-[1.5px] md:tracking-[2px] font-bold text-muted hover:text-white transition-colors leading-[1.5]">
+            <Instagram className="w-3 h-3 flex-shrink-0" />
+            Instagram
+          </a>
         </div>
-        <div className="max-w-[1200px] mx-auto mt-8 pt-6 border-t border-[#222] flex flex-col md:flex-row justify-between gap-3 text-[10px] uppercase tracking-[1px] font-bold text-[#555]">
+        <div className="max-w-[1200px] mx-auto mt-8 pt-6 border-t border-[#222] flex flex-col items-center gap-2 text-center text-[10px] uppercase tracking-[1px] font-bold text-[#555]">
           <p>© 2026 2mcode. Wszelkie prawa zastrzeżone.</p>
           <p>Made in Poland · Stała cena · Jasny zakres</p>
         </div>
