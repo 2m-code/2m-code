@@ -199,14 +199,14 @@ export default function App() {
             Tworzymy soft,<br />
             który zarabia.
           </motion.h1>
-          <motion.p
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="text-[12px] md:text-[14px] uppercase tracking-[2px] font-bold text-muted mb-6 md:mb-8"
           >
             Software house: wdrożenia AI, aplikacje mobilne, strony www i custom software
-          </motion.p>
+          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
