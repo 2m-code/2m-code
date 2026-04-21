@@ -194,11 +194,19 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[clamp(2.75rem,10vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-gradient mb-6 md:mb-8"
+            className="text-[clamp(2.75rem,10vw,110px)] font-black tracking-[-0.05em] leading-[0.85] uppercase text-gradient mb-4 md:mb-5"
           >
             Tworzymy soft,<br />
             który zarabia.
           </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-[12px] md:text-[14px] uppercase tracking-[2px] font-bold text-muted mb-6 md:mb-8"
+          >
+            Software house: wdrożenia AI, aplikacje mobilne, strony www i custom software
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
