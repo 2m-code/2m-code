@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 const CONTACT_EMAIL = '2mcode.it@gmail.com';
-const CALENDLY_URL = 'https://calendly.com/2mcode/30min';
+const CALENDLY_URL = 'https://calendly.com/2mcode-it/30min';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
