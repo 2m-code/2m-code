@@ -33,6 +33,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800;12..96,900&display=swap"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800;12..96,900&display=swap"
       rel="stylesheet"
     />
@@ -44,11 +49,27 @@
       "name": "2mcode",
       "url": "https://2mcode.pl/",
       "logo": "https://2mcode.pl/logo-mark.svg",
+      "image": "https://2mcode.pl/og-image.png",
       "description": "Software house z Polski. Wdrożenia AI, aplikacje mobilne i custom software. MVP w 4 tygodnie, AI audyt w 5 dni roboczych.",
       "email": "kontakt@2mcode.pl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Wrocław",
+        "addressCountry": "PL"
+      },
       "areaServed": "PL",
       "knowsLanguage": ["pl", "en"],
-      "sameAs": []
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "kontakt@2mcode.pl",
+        "contactType": "sales",
+        "availableLanguage": ["Polish", "English"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61570962609416",
+        "https://www.instagram.com/2m.code",
+        "https://github.com/2m-code"
+      ]
     }
     </script>
     <script type="application/ld+json">
