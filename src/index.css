@@ -38,14 +38,14 @@ html, body {
 }
 
 html {
-  scroll-padding-top: 112px;
+  scroll-padding-top: 80px;
   scrollbar-gutter: stable;
   scroll-behavior: smooth;
 }
 
 @media (min-width: 768px) {
   html {
-    scroll-padding-top: 132px;
+    scroll-padding-top: 100px;
   }
 }
 

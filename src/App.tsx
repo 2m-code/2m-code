@@ -65,6 +65,14 @@ export default function App() {
     { href: '#kontakt', label: 'Kontakt' },
   ];
 
+  const scrollToSection = (hash: string) => {
+    const section = document.querySelector(hash);
+    if (!section) return;
+    const heading = section.querySelector('h2');
+    const target = (heading || section) as HTMLElement;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="min-h-screen bg-bg text-text selection:bg-accent/30 font-sans relative">
       {/* Navbar */}
@@ -84,7 +92,17 @@ export default function App() {
         </a>
         <div className="hidden md:flex items-center gap-8 text-[12px] uppercase tracking-[2px] font-bold text-muted">
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="hover:text-white transition-colors">{l.label}</a>
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(l.href);
+              }}
+              className="hover:text-white transition-colors"
+            >
+              {l.label}
+            </a>
           ))}
         </div>
         <a
@@ -165,8 +183,7 @@ export default function App() {
                       e.preventDefault();
                       setMenuOpen(false);
                       setTimeout(() => {
-                        const el = document.querySelector(l.href);
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        scrollToSection(l.href);
                       }, 150);
                     }}
                     className="text-4xl font-black uppercase tracking-tighter text-gradient py-3 hover:opacity-80 transition-opacity"
@@ -259,6 +276,10 @@ export default function App() {
             </a>
             <a
               href="#pakiety"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#pakiety');
+              }}
               className="px-6 md:px-10 py-4 md:py-5 bg-transparent border border-[#444] font-bold uppercase text-sm text-white hover:bg-[#111] transition-colors w-full sm:w-auto flex items-center justify-center rounded-sm"
             >
               Zobacz pakiety i ceny
