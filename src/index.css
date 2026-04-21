@@ -37,6 +37,18 @@ html, body {
   max-width: 100%;
 }
 
+html {
+  scroll-padding-top: 112px;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 132px;
+  }
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);

@@ -70,10 +70,18 @@ export default function App() {
       {/* Navbar */}
       <header className="sticky top-0 z-40 bg-bg/80 backdrop-blur-md border-b border-[#222]/70">
       <nav className="flex items-center justify-between px-5 md:px-10 py-4 md:py-6 max-w-[1200px] mx-auto gap-3">
-        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+        <a
+          href="#top"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          aria-label="Strona główna"
+          className="flex items-center gap-2 md:gap-3 min-w-0 hover:opacity-80 transition-opacity"
+        >
           <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0" />
           <span className="text-xl md:text-2xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
-        </div>
+        </a>
         <div className="hidden md:flex items-center gap-8 text-[12px] uppercase tracking-[2px] font-bold text-muted">
           {navLinks.map((l) => (
             <a key={l.href} href={l.href} className="hover:text-white transition-colors">{l.label}</a>
@@ -122,10 +130,21 @@ export default function App() {
             >
               {/* Menu header */}
               <div className="flex items-center justify-between px-5 py-6 border-b border-[#222]">
-                <div className="flex items-center gap-2">
+                <a
+                  href="#top"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMenuOpen(false);
+                    setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 150);
+                  }}
+                  aria-label="Strona główna"
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                >
                   <img src="/logo-mark.svg" alt="2mcode" className="w-8 h-8" />
                   <span className="text-xl font-black tracking-tighter lowercase">2m<span className="text-[#00BCD4]">code</span></span>
-                </div>
+                </a>
                 <button
                   type="button"
                   onClick={() => setMenuOpen(false)}
@@ -138,18 +157,22 @@ export default function App() {
 
               {/* Menu links */}
               <nav className="flex-1 flex flex-col justify-center px-5 gap-1">
-                {navLinks.map((l, i) => (
-                  <motion.a
+                {navLinks.map((l) => (
+                  <a
                     key={l.href}
                     href={l.href}
-                    onClick={() => setMenuOpen(false)}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.05 + i * 0.05, duration: 0.25 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMenuOpen(false);
+                      setTimeout(() => {
+                        const el = document.querySelector(l.href);
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }, 150);
+                    }}
                     className="text-4xl font-black uppercase tracking-tighter text-gradient py-3 hover:opacity-80 transition-opacity"
                   >
                     {l.label}
-                  </motion.a>
+                  </a>
                 ))}
               </nav>
 
