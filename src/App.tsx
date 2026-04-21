@@ -21,32 +21,6 @@ import {
 const CONTACT_EMAIL = '2mcode.it@gmail.com';
 const CALENDLY_URL = 'https://calendly.com/2mcode/30min';
 
-const FONTS: Record<string, { name: string; stack: string }> = {
-  '1': { name: 'Inter - neo-grotesque', stack: '"Inter", system-ui, sans-serif' },
-  '2': { name: 'Space Grotesk - geometric', stack: '"Space Grotesk", system-ui, sans-serif' },
-  '3': { name: 'Instrument Serif - editorial', stack: '"Instrument Serif", Georgia, serif' },
-  '4': { name: 'Fraunces - flared serif', stack: '"Fraunces", Georgia, serif' },
-  '5': { name: 'Syne - funky display', stack: '"Syne", system-ui, sans-serif' },
-  '6': { name: 'Bricolage Grotesque - variable', stack: '"Bricolage Grotesque", system-ui, sans-serif' },
-  '7': { name: 'Unbounded - heavy display', stack: '"Unbounded", system-ui, sans-serif' },
-  '8': { name: 'Ubuntu Mono - linux system', stack: '"Ubuntu Mono", "Courier New", ui-monospace, monospace' },
-  '9': { name: 'Fira Code - dev ligatures', stack: '"Fira Code", ui-monospace, monospace' },
-  '0': { name: 'Space Mono - retro mono', stack: '"Space Mono", ui-monospace, monospace' },
-};
-
-const KEY_THEMES = [
-  { id: 'q', name: 'Linear Sky', swatch: 'linear-gradient(135deg,#0A0E14,#38BDF8)' },
-  { id: 'w', name: 'Vercel Indigo', swatch: 'linear-gradient(135deg,#0B0B0F,#818CF8)' },
-  { id: 'e', name: 'Stripe Emerald', swatch: 'linear-gradient(135deg,#0A1014,#10B981)' },
-  { id: 'r', name: 'Framer Violet', swatch: 'linear-gradient(135deg,#0C0A14,#8B5CF6)' },
-  { id: 't', name: 'Graphite Amber', swatch: 'linear-gradient(135deg,#0F0D0A,#F59E0B)' },
-  { id: 'y', name: 'Notion Blue', swatch: 'linear-gradient(135deg,#0A1020,#3B82F6)' },
-  { id: 'u', name: 'Teal Minimal', swatch: 'linear-gradient(135deg,#09100F,#14B8A6)' },
-  { id: 'i', name: 'Rose Muted', swatch: 'linear-gradient(135deg,#100A0D,#F43F5E)' },
-  { id: 'o', name: 'Green Calm', swatch: 'linear-gradient(135deg,#0B1010,#22C55E)' },
-  { id: 'p', name: 'Midnight Lavender', swatch: 'linear-gradient(135deg,#0B0C1A,#A78BFA)' },
-];
-
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -62,29 +36,11 @@ const staggerContainer = {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState<string>('e');
-  const [font, setFont] = useState<string>('6');
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty('--font-sans', FONTS[font].stack);
-  }, [font]);
-
-  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setMenuOpen(false);
-        return;
-      }
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-      const target = e.target as HTMLElement | null;
-      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
-      if (/^[0-9]$/.test(e.key)) setFont(e.key);
-      else if (/^[qwertyuiop]$/.test(e.key.toLowerCase())) setTheme(e.key.toLowerCase());
+      if (e.key === 'Escape') setMenuOpen(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -620,49 +576,6 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Theme switcher (keys 1-9 for bg, Q-P for full palettes) - panel hidden, shortcuts still active */}
-      <div className="hidden fixed bottom-6 right-6 z-50 flex-col gap-2 bg-black/80 backdrop-blur border border-[#333] rounded-sm p-2 shadow-lg">
-        <div className="flex items-center gap-2">
-          <span className="hidden sm:block text-[9px] uppercase tracking-[2px] font-bold text-muted pl-2 pr-1 w-12">Font</span>
-          {Object.entries(FONTS).map(([id, f]) => {
-            const active = font === id;
-            return (
-              <button
-                key={id}
-                onClick={() => setFont(id)}
-                title={`${id} - ${f.name}`}
-                aria-label={`Font ${id}: ${f.name}`}
-                className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 bg-[#111] ${active ? 'border-white scale-110' : 'border-[#333]'}`}
-                style={{ fontFamily: f.stack }}
-              >
-                <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-black text-white ${active ? 'opacity-100' : 'opacity-70'}`}>
-                  {id}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="hidden sm:block text-[9px] uppercase tracking-[2px] font-bold text-muted pl-2 pr-1 w-12">Paleta</span>
-          {KEY_THEMES.map((t) => {
-            const active = theme === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setTheme(t.id)}
-                title={`${t.id.toUpperCase()} - ${t.name}`}
-                aria-label={`Paleta ${t.id.toUpperCase()}: ${t.name}`}
-                className={`relative w-7 h-7 rounded-sm border transition-transform hover:scale-110 ${active ? 'border-white scale-110' : 'border-[#333]'}`}
-                style={{ background: t.swatch }}
-              >
-                <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-black text-white uppercase ${active ? 'opacity-100' : 'opacity-70'}`}>
-                  {t.id}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
