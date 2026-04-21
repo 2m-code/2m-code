@@ -315,13 +315,13 @@ export default function App() {
             {[
               {
                 name: 'AI Audyt',
-                price: 'od 4 900 zł',
+                price: 'od 1500 zł',
                 period: 'netto, jednorazowo',
-                pitch: 'Znajdziemy 3 procesy w Twojej firmie, które AI zautomatyzuje w tym kwartale.',
+                pitch: 'Znajdziemy w Twojej firmie procesy, które AI zautomatyzuje w tym kwartale. Od prostych integracji po dedykowanych agentów AI.',
                 features: [
-                  '2h warsztat z zespołem',
-                  '5 dni roboczych realizacji',
-                  'Mapa procesów + ROI każdego',
+                  'Rozmowa 1:1 z inżynierem, nie handlowcem',
+                  'Realizacja od 5 dni roboczych',
+                  'Rekomendacje automatyzacji dopasowane do firmy',
                   'Rekomendacje stack\u2019u (LLM, narzędzia)',
                   'Plan wdrożenia na 90 dni',
                 ],
