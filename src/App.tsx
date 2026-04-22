@@ -257,7 +257,7 @@ export default function App() {
             Twój biznes zasługuje na technologię, która działa.
             <br />
             Specjalizujemy się we wdrożeniach AI, tworzeniu stron www, aplikacji mobilnych i budowie systemów, które realnie wspierają skalowanie firmy.
-            <span className="block mt-3 text-muted text-[14px]">MVP w 4 tygodnie. AI audyt w 5 dni roboczych. Stała cena, bez godzin na spotkaniach.</span>
+            <span className="block mt-3 text-muted text-[14px]">Darmowy prototyp w 24h. AI audyt w 5 dni roboczych. Stała cena, bez godzin na spotkaniach.</span>
           </motion.p>
 
           <motion.div
@@ -292,7 +292,7 @@ export default function App() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#222] border border-[#222] rounded-sm overflow-hidden">
             {[
               { value: '12+', label: 'Wdrożonych projektów' },
-              { value: '4 tyg.', label: 'Średni czas do MVP' },
+              { value: '5 dni.', label: 'Średni czas do gotowego produktu' },
               { value: '100%', label: 'Stała cena, bez niespodzianek' },
               { value: '24h', label: 'Czas na pierwszą odpowiedź' },
             ].map((stat, i) => (
@@ -389,7 +389,7 @@ export default function App() {
                   'Indywidualny projekt graficzny',
                   'Responsywność (mobile-first)',
                   'Optymalizacja SEO i Core Web Vitals',
-                  'Darmowy prototyp w 48h',
+                  'Darmowy prototyp w 24h',
                   'Hosting i wsparcie techniczne',
                 ],
                 cta: 'Zamów stronę',
@@ -450,7 +450,7 @@ export default function App() {
           <p className="text-center text-muted text-[12px] mt-10">
             Potrzebujesz czegoś innego?{' '}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline font-bold">Napisz do nas</a>{' '}
-            - przygotujemy ofertę w 48h.
+            - przygotujemy ofertę w 24h.
           </p>
         </section>
 
