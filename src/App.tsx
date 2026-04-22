@@ -384,7 +384,7 @@ export default function App() {
                 name: 'Strony WWW',
                 price: 'od 1 000 zł',
                 period: 'netto, projekt',
-                pitch: 'Szybka, nowoczesna strona, która konwertuje odwiedzających w klientów. Od landing page po pełny serwis firmowy.',
+                pitch: 'Szybka, nowoczesna strona, która zamienia odwiedzających w klientów. Od landing page po pełny serwis firmowy.',
                 features: [
                   'Indywidualny projekt graficzny',
                   'Responsywność (mobile-first)',
